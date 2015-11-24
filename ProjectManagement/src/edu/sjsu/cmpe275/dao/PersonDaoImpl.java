@@ -19,7 +19,6 @@ package edu.sjsu.cmpe275.dao;
  * 
  */
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,6 @@ import org.springframework.transaction.annotation.*;
 
 import edu.sjsu.cmpe275.entities.Person;
 
-
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 public class PersonDaoImpl implements PersonDao {
 
@@ -42,19 +40,14 @@ public class PersonDaoImpl implements PersonDao {
 	public PersonDaoImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
-	
-	//1> Create a Person in the database
+
+	// 1> Create a Person in the database
 	@Override
-	public void addPerson(Person person) {
+	public boolean addPerson(Person person) {
 		System.out.println("IN CreatePerson");
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
-	
-			//Write required code here
-			
-
 			session.save(person);
 			session.getTransaction().commit();
 			System.out.println("create person result: success");
@@ -62,32 +55,49 @@ public class PersonDaoImpl implements PersonDao {
 			System.out
 					.println("EmailID has to be a unique value. This value already exists.");
 			session.getTransaction().rollback();
+			return false;
 		} catch (JDBCConnectionException e) {
 			System.out.println("Connection lost");
 			session.getTransaction().rollback();
+			return false;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public Person getPerson(String emailid) {
+		System.out.println("IN GetPerson");
+		Person person = null;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			List<Person> persons= session
+					.createQuery("from Person where EMAILID = :emailid")
+					.setParameter("emailid", emailid).list();
+			if(persons.size()>0)
+				person=persons.get(0);
+			session.getTransaction().commit();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		
-	}
-
-	@Override
-	public Person getPerson(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return person;
 	}
 
 	@Override
 	public void updatePerson(Person person) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deletePerson(Person person) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }
