@@ -26,7 +26,7 @@ public class Project implements java.io.Serializable {
 
 	private int projectId;
 	
-	@OneToOne
+	@ManyToOne
 	private Person owner;
 
 	@Transient
@@ -48,17 +48,15 @@ public class Project implements java.io.Serializable {
 		return this.projectId;
 	}
 
-	public void setProjectId(int projectId) {
+	private void setProjectId(int projectId) {
 		this.projectId = projectId;
 	}
 
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "personId")
 	public Person getOwner() {
 		return this.owner;
 	}
 
-	public void setOwnerId(Person owner) {
+	public void setOwner(Person owner) {
 		this.owner= owner;
 	}
 
@@ -67,7 +65,7 @@ public class Project implements java.io.Serializable {
 		return this.projectDetail;
 	}
 
-	public void setTitle(EntityDetail projectDetail) {
+	public void setProjectDetail(EntityDetail projectDetail) {
 		this.projectDetail = projectDetail;
 	}
 

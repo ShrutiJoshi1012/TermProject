@@ -5,6 +5,7 @@ package edu.sjsu.cmpe275.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -26,6 +27,7 @@ public class SharedProjects implements java.io.Serializable {
 		this.sharedPrsnId = sharedPrsnId;
 	}
 
+	@Id
 	@Column(name = "SHARED_PRJCT_ID", nullable = false)
 	public int getSharedPrjctId() {
 		return this.sharedPrjctId;
@@ -35,6 +37,7 @@ public class SharedProjects implements java.io.Serializable {
 		this.sharedPrjctId = sharedPrjctId;
 	}
 
+	@Id
 	@Column(name = "SHARED_PRSN_ID", nullable = false)
 	public int getSharedPrsnId() {
 		return this.sharedPrsnId;

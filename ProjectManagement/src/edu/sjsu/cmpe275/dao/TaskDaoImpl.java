@@ -17,6 +17,12 @@ import edu.sjsu.cmpe275.entities.Task;
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 public class TaskDaoImpl implements TaskDao{
 
+	private SessionFactory sessionFactory;
+
+	public TaskDaoImpl(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 	@Override
 	public void addTask(Task task) {
 		// TODO Auto-generated method stub

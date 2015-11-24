@@ -21,15 +21,14 @@ import javax.persistence.Table;
 public class Task implements java.io.Serializable {
 
 	private int taskId;
-	
+
 	private Project project;
 
 	private Person assignee;
-	
+
 	private int estimatedWork;
 	private int actualWork;
-	
-	
+
 	@Transient
 	@Embedded
 	private EntityDetail taskDetail;
@@ -37,9 +36,7 @@ public class Task implements java.io.Serializable {
 	public Task() {
 	}
 
-
-	public Task(Project project, 
-			Person assignee,  int estimatedWork,
+	public Task(Project project, Person assignee, int estimatedWork,
 			int actualWork, EntityDetail taskDetail) {
 		this.project = project;
 		this.taskDetail = taskDetail;
@@ -51,14 +48,13 @@ public class Task implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "TASK_ID", unique = true, nullable = false)
-	public Integer getTaskId() {
+	public int getTaskId() {
 		return this.taskId;
 	}
 
-	public void setTaskId(Integer taskId) {
+	private void setTaskId(int taskId) {
 		this.taskId = taskId;
 	}
-
 
 	public Project getProject() {
 		return this.project;
@@ -68,10 +64,6 @@ public class Task implements java.io.Serializable {
 		this.project = project;
 	}
 
-	
-	
-
-
 	public Person getAssignee() {
 		return this.assignee;
 	}
@@ -80,34 +72,30 @@ public class Task implements java.io.Serializable {
 		this.assignee = assignee;
 	}
 
-	
-
 	@Column(name = "ESTIMATED_WORK")
-	public Integer getEstimatedWork() {
+	public int getEstimatedWork() {
 		return this.estimatedWork;
 	}
 
-	public void setEstimatedWork(Integer estimatedWork) {
+	public void setEstimatedWork(int estimatedWork) {
 		this.estimatedWork = estimatedWork;
 	}
 
 	@Column(name = "ACTUAL_WORK")
-	public Integer getActualWork() {
+	public int getActualWork() {
 		return this.actualWork;
 	}
 
-	public void setActualWork(Integer actualWork) {
+	public void setActualWork(int actualWork) {
 		this.actualWork = actualWork;
 	}
-	
-	
+
 	public EntityDetail getTaskDetail() {
 		return this.taskDetail;
 	}
 
-	public void setTitle(EntityDetail taskDetail) {
+	public void setTaskDetail(EntityDetail taskDetail) {
 		this.taskDetail = taskDetail;
 	}
-
 
 }

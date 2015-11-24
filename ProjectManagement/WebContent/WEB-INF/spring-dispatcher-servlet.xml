@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" 
-xmlns:context="http://www.springframework.org/schema/context" 
-xmlns:mvc="http://www.springframework.org/schema/mvc" 
-xmlns:tx="http://www.springframework.org/schema/tx" 
-xmlns:util="http://www.springframework.org/schema/util"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://www.springframework.org/schema/beans         
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans         
 http://www.springframework.org/schema/beans/spring-beans-4.2.xsd         
 http://www.springframework.org/schema/context         
 http://www.springframework.org/schema/context/spring-context-4.2.xsd          
@@ -15,67 +13,71 @@ http://www.springframework.org/schema/tx
 http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
 http://www.springframework.org/schema/util 
 http://www.springframework.org/schema/util/spring-util-4.2.xsd">
-   <context:component-scan base-package="edu.sjsu.cmpe275" />
+	<context:component-scan base-package="edu.sjsu.cmpe275" />
 
-  
-     <bean id="personDao" class="edu.sjsu.cmpe275.dao.PersonDaoImpl">
-      <constructor-arg>
-         <ref bean="sessionFactory" />
-      </constructor-arg>
-   </bean>
-  
-     <bean id="projectDao" class="edu.sjsu.cmpe275.dao.ProjectDaoImpl">
-      <constructor-arg>
-         <ref bean="sessionFactory" />
-      </constructor-arg>
-   </bean>
-  
-     <bean id="taskDao" class="edu.sjsu.cmpe275.dao.TaskDaoImpl">
-      <constructor-arg>
-         <ref bean="sessionFactory" />
-      </constructor-arg>
-   </bean>
-  
-  
-  
-    
-  
-   
-   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-      <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-      <property name="url" value="jdbc:mysql://localhost:3306/CMPE275_PROJECT_MGMT_DB" />
-      <property name="username" value="root" />
-      <property name="password" value="" />
-   </bean>
-   <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-      <property name="dataSource" ref="dataSource" />
-      <property name="configLocation" value="classpath:hibernate.cfg.xml" />
-   </bean>  
-  <tx:annotation-driven transaction-manager="transactionManager"/>
-   <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-      <property name="sessionFactory" ref="sessionFactory" />     
-   </bean>
 
- <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />
-   <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-      <property name="favorPathExtension" value="true" />
-      <property name="favorParameter" value="true" />
-      <property name="ignoreAcceptHeader" value="false" />
-      <property name="parameterName" value="format" />
-      <property name="defaultContentType" value="application/json" />
-      <property name="useJaf" value="false" />    
-      <property name="mediaTypes">
-         <map>
-            <entry key="html" value="text/html" />
-            <entry key="jsoN" value="application/json" />
-            <entry key="json" value="application/json" />
-            <entry key="xml" value="application/xml" />
-         </map>
-      </property>
-   </bean>
-   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-       <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
-        <property name="prefix" value="/WEB-INF/views/" />
-        <property name="suffix" value=".jsp" />
-</bean>
+	<bean id="personDao" class="edu.sjsu.cmpe275.dao.PersonDaoImpl">
+		<constructor-arg>
+			<ref bean="sessionFactory" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="projectDao" class="edu.sjsu.cmpe275.dao.ProjectDaoImpl">
+		<constructor-arg>
+			<ref bean="sessionFactory" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="taskDao" class="edu.sjsu.cmpe275.dao.TaskDaoImpl">
+		<constructor-arg>
+			<ref bean="sessionFactory" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/CMPE275_PROJECT_MGMT_DB" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	    <property name="dataSource" ref="dataSource" /> 
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<mvc:annotation-driven
+		content-negotiation-manager="contentNegotiationManager" />
+	<bean id="contentNegotiationManager"
+		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="true" />
+		<property name="favorParameter" value="true" />
+		<property name="ignoreAcceptHeader" value="false" />
+		<property name="parameterName" value="format" />
+		<property name="defaultContentType" value="application/json" />
+		<property name="useJaf" value="false" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html" />
+				<entry key="jsoN" value="application/json" />
+				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
 </beans>
