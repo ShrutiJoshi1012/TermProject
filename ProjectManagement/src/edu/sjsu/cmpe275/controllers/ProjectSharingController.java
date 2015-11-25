@@ -9,7 +9,9 @@ import edu.sjsu.cmpe275.dao.SharedProjectsDao;
 @Controller
 public class ProjectSharingController {
 
-	
+	//Initialized via bean
+	@Autowired
+	private SharedProjectsDao sharedProjectsDao;
 	
 	
 }

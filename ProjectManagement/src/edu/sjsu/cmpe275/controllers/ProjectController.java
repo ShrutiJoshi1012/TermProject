@@ -9,6 +9,7 @@ import edu.sjsu.cmpe275.dao.ProjectDao;
 @Controller
 public class ProjectController {
 
+	//Initialized via bean
 	@Autowired
 	private ProjectDao projectDao;
 	

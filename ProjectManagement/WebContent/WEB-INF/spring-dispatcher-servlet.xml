@@ -33,6 +33,13 @@ http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 			<ref bean="sessionFactory" />
 		</constructor-arg>
 	</bean>
+	
+		<bean id="sharedProjectsDao" class="edu.sjsu.cmpe275.dao.SharedProjectsDaoImpl">
+		<constructor-arg>
+			<ref bean="sessionFactory" />
+		</constructor-arg>
+	</bean>
+	
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

@@ -8,6 +8,8 @@ import edu.sjsu.cmpe275.dao.TaskDao;
 
 @Controller
 public class TaskController {
+	
+	//Initialized via bean
 	@Autowired
 	private TaskDao taskDao;
 	

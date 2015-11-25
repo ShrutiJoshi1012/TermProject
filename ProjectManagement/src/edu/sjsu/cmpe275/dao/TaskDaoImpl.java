@@ -24,9 +24,9 @@ public class TaskDaoImpl implements TaskDao{
 	}
 	
 	@Override
-	public void addTask(Task task) {
+	public boolean addTask(Task task) {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -36,15 +36,15 @@ public class TaskDaoImpl implements TaskDao{
 	}
 
 	@Override
-	public void updateTask(Task task) {
+	public boolean updateTask(Task task) {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
-	public void deleteTask(Task task) {
+	public boolean deleteTask(Task task) {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override

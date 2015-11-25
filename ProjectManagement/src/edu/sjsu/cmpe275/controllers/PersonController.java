@@ -23,6 +23,7 @@ import edu.sjsu.cmpe275.entities.Person;
 @Controller
 public class PersonController {
 
+	//Initialized via bean
 	@Autowired
 	private PersonDao personDao;
 
