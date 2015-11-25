@@ -48,7 +48,7 @@ public class Project implements java.io.Serializable {
 		return this.projectId;
 	}
 
-	private void setProjectId(int projectId) {
+	public void setProjectId(int projectId) {
 		this.projectId = projectId;
 	}
 

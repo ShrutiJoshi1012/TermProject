@@ -61,7 +61,8 @@ public class PersonDaoImpl implements PersonDao {
 			session.getTransaction().rollback();
 			return false;
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 			return false;
 		}
@@ -82,16 +83,33 @@ public class PersonDaoImpl implements PersonDao {
 				person=persons.get(0);
 			session.getTransaction().commit();
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 		}
 		return person;
 	}
 
 	@Override
-	public void updatePerson(Person person) {
-		// TODO Auto-generated method stub
-
+	public boolean updatePerson(Person person) {
+		System.out.println("IN UpdatePerson");
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(person);;
+			session.getTransaction().commit();
+			System.out.println("update person result: success");
+		}catch (JDBCConnectionException e) {
+			System.out.println("Connection lost");
+			session.getTransaction().rollback();
+			return false;
+		} catch (HibernateException e) {
+			//e.printStackTrace();
+			System.out.println("Hibernate exception occured");
+			session.getTransaction().rollback();
+			return false;
+		}
+		return true;
 	}
 
 	@Override

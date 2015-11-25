@@ -52,7 +52,7 @@ public class Task implements java.io.Serializable {
 		return this.taskId;
 	}
 
-	private void setTaskId(int taskId) {
+	public void setTaskId(int taskId) {
 		this.taskId = taskId;
 	}
 

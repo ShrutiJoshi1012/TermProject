@@ -76,7 +76,7 @@ public class Person implements java.io.Serializable {
 		return this.personId;
 	}
 
-	private void setPersonId(int personId) {
+	public void setPersonId(int personId) {
 		this.personId = personId;
 	}
 

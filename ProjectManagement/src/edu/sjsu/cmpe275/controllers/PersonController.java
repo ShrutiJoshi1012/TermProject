@@ -71,11 +71,26 @@ public class PersonController {
 	}
 
 	// 4> API to update a user
-	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST, produces = { "text/html" })
-	public Object updateProfile(@RequestParam Person person,
-			ModelAndView model, HttpServletRequest request) {
-
-		return null;
+	
+	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST, produces = { "application/json" })
+	public @ResponseBody
+	ResponseEntity<?> updateProfile(@RequestParam(value ="personId") int personId,
+			@RequestParam(value ="name") String name,
+			@RequestParam(value ="password") String password,
+			@RequestParam(value ="emailid") String emailid,
+			@RequestParam(value ="description") String description) {
+		System.out.println("Inside signup API ");
+		HttpHeaders responseHeaders = new HttpHeaders();
+		Person person=new Person(name,password,emailid,description);
+		person.setPersonId(personId);
+		boolean isUpdated=personDao.updatePerson(person);
+		if(!isUpdated)
+		return new ResponseEntity<String>("fail", responseHeaders,
+				HttpStatus.OK);
+		return new ResponseEntity<String>("success", responseHeaders,
+				HttpStatus.OK);
+		
 	}
+
 
 }
