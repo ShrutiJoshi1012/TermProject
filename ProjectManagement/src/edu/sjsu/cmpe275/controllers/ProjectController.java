@@ -35,14 +35,31 @@ public class ProjectController {
 			@RequestParam(value = "description") String description) {
 		System.out.println("Inside addProject API ");
 		HttpHeaders responseHeaders = new HttpHeaders();
-		Person owner = ownerDao.getPerson(emailid);
-		Project project = new Project(owner, new EntityDetail(title,
-				description, state));
+		Project project = new Project();
+		project.setOwner(ownerDao.getPerson(emailid));
+		project.setProjectDetail(new EntityDetail(title,description, state));
+		System.out.println("Project with owner is : "+ project.getOwner().getEmailid());
 		if (!projectDao.addProject(project))
 			return new ResponseEntity<String>("fail", responseHeaders,
 					HttpStatus.OK);
 		return new ResponseEntity<String>("success", responseHeaders,
 				HttpStatus.OK);
 
+	}
+	
+	
+	// 2> API to get a project
+	@RequestMapping(value = "/getproject", method = RequestMethod.POST, produces ={ "application/json" })
+	public @ResponseBody
+	ResponseEntity<?> getProject(@RequestParam(value ="projectId") int projectId) {
+		System.out.println("Inside getProject API ");
+		HttpHeaders responseHeaders = new HttpHeaders();
+		Project project=projectDao.getProject(projectId);
+		if( project != null)
+		return new ResponseEntity<Project>(project, responseHeaders,
+				HttpStatus.OK);
+		return new ResponseEntity<String>("NotFound", responseHeaders,
+				HttpStatus.OK);
+		
 	}
 }

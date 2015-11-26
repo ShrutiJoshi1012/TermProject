@@ -37,7 +37,8 @@ public class Person implements java.io.Serializable {
 	private String emailid;
 	private String description;
 	
-	@OneToMany
+	//Person can own multiple projects
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="PERSON_ID", cascade=CascadeType.ALL)  
 	private List<Project> ownedProjects=new ArrayList<Project>();
 	
 	
@@ -115,7 +116,6 @@ public class Person implements java.io.Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
 
 	@Transient
 	public List<Project> getOwnedProjects() {

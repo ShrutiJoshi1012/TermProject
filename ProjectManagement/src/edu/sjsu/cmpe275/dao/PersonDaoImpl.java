@@ -22,6 +22,7 @@ package edu.sjsu.cmpe275.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -31,6 +32,7 @@ import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.transaction.annotation.*;
 
 import edu.sjsu.cmpe275.entities.Person;
+import edu.sjsu.cmpe275.entities.Project;
 
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 public class PersonDaoImpl implements PersonDao {
@@ -61,7 +63,7 @@ public class PersonDaoImpl implements PersonDao {
 			session.getTransaction().rollback();
 			return false;
 		} catch (HibernateException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 			return false;
@@ -69,6 +71,7 @@ public class PersonDaoImpl implements PersonDao {
 		return true;
 	}
 
+	// 2> Get a Person from the database
 	@Override
 	public Person getPerson(String emailid) {
 		System.out.println("IN GetPerson");
@@ -76,35 +79,48 @@ public class PersonDaoImpl implements PersonDao {
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
-			List<Person> persons= session
+			List<Person> persons = session
 					.createQuery("from Person where EMAILID = :emailid")
 					.setParameter("emailid", emailid).list();
-			if(persons.size()>0)
-				person=persons.get(0);
+			if (persons.size() > 0) {
+				person = persons.get(0);
+
+				List<Project> ownedProjects = session
+						.createQuery("from Project where OWNER_ID = :id")
+						.setParameter("id", person.getPersonId()).list();
+				if (ownedProjects.size() > 0) {
+					for (int i = 0; i < ownedProjects.size(); i++)
+						ownedProjects.get(i).setOwner(null);
+					person.setOwnedProjects(ownedProjects);
+				}
+
+			}
 			session.getTransaction().commit();
 		} catch (HibernateException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 		}
 		return person;
 	}
 
+	// 3> Update a Person in the database
 	@Override
 	public boolean updatePerson(Person person) {
 		System.out.println("IN UpdatePerson");
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
-			session.saveOrUpdate(person);;
+			session.saveOrUpdate(person);
+			;
 			session.getTransaction().commit();
 			System.out.println("update person result: success");
-		}catch (JDBCConnectionException e) {
+		} catch (JDBCConnectionException e) {
 			System.out.println("Connection lost");
 			session.getTransaction().rollback();
 			return false;
 		} catch (HibernateException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 			return false;
@@ -112,6 +128,7 @@ public class PersonDaoImpl implements PersonDao {
 		return true;
 	}
 
+	// 4> Delete a Person in the database
 	@Override
 	public void deletePerson(Person person) {
 		// TODO Auto-generated method stub

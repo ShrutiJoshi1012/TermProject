@@ -58,20 +58,13 @@ public class PersonController {
 		if( person != null)
 		return new ResponseEntity<Person>(person, responseHeaders,
 				HttpStatus.OK);
-		return new ResponseEntity<String>("fail", responseHeaders,
+		return new ResponseEntity<String>("NotFound", responseHeaders,
 				HttpStatus.OK);
 		
 	}
 
-	// 3> API to get a user
-	@RequestMapping(value = "/getprofile", method = RequestMethod.GET, produces = { "text/html" })
-	public Object getProfile(@RequestParam int id, ModelAndView model,
-			HttpServletRequest request) {
 
-		return null;
-	}
-
-	// 4> API to update a user
+	// 3> API to update a user
 	
 	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST, produces = { "application/json" })
 	public @ResponseBody
