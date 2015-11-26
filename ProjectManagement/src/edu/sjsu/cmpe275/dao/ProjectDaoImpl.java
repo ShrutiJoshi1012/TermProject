@@ -2,7 +2,11 @@ package edu.sjsu.cmpe275.dao;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +23,30 @@ public class ProjectDaoImpl implements ProjectDao{
 	}
 	
 	@Override
-	public void addProject(Project project) {
-		// TODO Auto-generated method stub
+	public boolean addProject(Project project) {
+		System.out.println("IN CreateProject");
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.save(project);
+			session.getTransaction().commit();
+			System.out.println("create project result: success");
+		} catch (ConstraintViolationException e) {
+			System.out
+					.println("Invalid Owner_Id.. add project failed");
+			session.getTransaction().rollback();
+			return false;
+		} catch (JDBCConnectionException e) {
+			System.out.println("Connection lost");
+			session.getTransaction().rollback();
+			return false;
+		} catch (HibernateException e) {
+			//e.printStackTrace();
+			System.out.println("Hibernate exception occured");
+			session.getTransaction().rollback();
+			return false;
+		}
+		return true;
 		
 	}
 

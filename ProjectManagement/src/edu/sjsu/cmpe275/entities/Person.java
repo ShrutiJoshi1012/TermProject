@@ -80,7 +80,7 @@ public class Person implements java.io.Serializable {
 		this.personId = personId;
 	}
 
-	@Column(name = "NAME", nullable = false, length = 45)
+	@Column(name = "NAME", nullable = false, length = 100)
 	public String getName() {
 		return this.name;
 	}
@@ -107,7 +107,7 @@ public class Person implements java.io.Serializable {
 		this.emailid = emailid;
 	}
 
-	@Column(name = "DESCRIPTION", length = 100)
+	@Column(name = "DESCRIPTION", length = 500)
 	public String getDescription() {
 		return this.description;
 	}

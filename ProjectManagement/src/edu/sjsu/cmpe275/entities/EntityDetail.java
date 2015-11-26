@@ -11,7 +11,20 @@ public class EntityDetail {
 	private String description;
 	private String state;
 	
-	@Column(name = "TITLE", nullable = false, length = 50)
+	
+	//Constructors
+	public EntityDetail(){
+		
+	}
+	public EntityDetail(String title,String description,String state){
+		this.title=title;
+		this.description=description;
+		this.state=state;
+	}
+	
+	
+	//Getter-Setter methods
+	@Column(name = "TITLE", nullable = false, length = 100)
 	public String getTitle() {
 		return this.title;
 	}
@@ -21,7 +34,7 @@ public class EntityDetail {
 	}
 
 	
-	@Column(name = "DESCRIPTION", length = 100)
+	@Column(name = "DESCRIPTION", length = 500)
 	public String getDescription() {
 		return this.description;
 	}

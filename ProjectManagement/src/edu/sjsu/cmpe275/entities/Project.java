@@ -26,10 +26,10 @@ public class Project implements java.io.Serializable {
 
 	private int projectId;
 	
-	@ManyToOne
+	
 	private Person owner;
 
-	@Transient
+
 	@Embedded
 	private EntityDetail projectDetail;
 	
@@ -52,6 +52,9 @@ public class Project implements java.io.Serializable {
 		this.projectId = projectId;
 	}
 
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "OWNER_ID")
 	public Person getOwner() {
 		return this.owner;
 	}

@@ -12,6 +12,5 @@ public class ProjectSharingController {
 	//Initialized via bean
 	@Autowired
 	private SharedProjectsDao sharedProjectsDao;
-	
-	
+		
 }

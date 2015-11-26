@@ -17,6 +17,8 @@ public class SharedProjectsDaoImpl implements SharedProjectsDao{
 	public SharedProjectsDaoImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
+	
+	
 	@Override
 	public boolean shareProject(int projectId, int personId) {
 		// TODO Auto-generated method stub

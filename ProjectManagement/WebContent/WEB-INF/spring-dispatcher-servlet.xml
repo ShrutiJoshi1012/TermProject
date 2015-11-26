@@ -21,6 +21,11 @@ http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 			<ref bean="sessionFactory" />
 		</constructor-arg>
 	</bean>
+	<bean id="ownerDao" class="edu.sjsu.cmpe275.dao.PersonDaoImpl">
+		<constructor-arg>
+			<ref bean="sessionFactory" />
+		</constructor-arg>
+	</bean>
 
 	<bean id="projectDao" class="edu.sjsu.cmpe275.dao.ProjectDaoImpl">
 		<constructor-arg>

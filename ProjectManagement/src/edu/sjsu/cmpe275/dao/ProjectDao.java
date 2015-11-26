@@ -5,7 +5,7 @@ import java.util.List;
 import edu.sjsu.cmpe275.entities.Project;
 
 public interface ProjectDao {
-	void addProject(Project project);
+	boolean addProject(Project project);
 	Project getProject(int id);
 	void updateProject(Project project);
 	void deleteProject(Project project);
