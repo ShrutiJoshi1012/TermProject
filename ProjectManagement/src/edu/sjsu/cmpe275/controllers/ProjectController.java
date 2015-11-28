@@ -37,8 +37,7 @@ public class ProjectController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		Project project = new Project();
 		project.setOwner(ownerDao.getPerson(emailid));
-		project.setProjectDetail(new EntityDetail(title,description, state));
-		System.out.println("Project with owner is : "+ project.getOwner().getEmailid());
+		project.setProjectDetail(new EntityDetail(title, description, state));
 		if (!projectDao.addProject(project))
 			return new ResponseEntity<String>("fail", responseHeaders,
 					HttpStatus.OK);
@@ -46,20 +45,22 @@ public class ProjectController {
 				HttpStatus.OK);
 
 	}
-	
-	
+
 	// 2> API to get a project
-	@RequestMapping(value = "/getproject", method = RequestMethod.POST, produces ={ "application/json" })
+	@RequestMapping(value = "/getproject", method = RequestMethod.POST, produces = { "application/json" })
 	public @ResponseBody
-	ResponseEntity<?> getProject(@RequestParam(value ="projectId") int projectId) {
+	ResponseEntity<?> getProject(
+			@RequestParam(value = "projectId") int projectId) {
 		System.out.println("Inside getProject API ");
 		HttpHeaders responseHeaders = new HttpHeaders();
-		Project project=projectDao.getProject(projectId);
-		if( project != null)
-		return new ResponseEntity<Project>(project, responseHeaders,
-				HttpStatus.OK);
+		Project project = projectDao.getProject(projectId);
+		if (project != null)
+			return new ResponseEntity<Project>(project, responseHeaders,
+					HttpStatus.OK);
 		return new ResponseEntity<String>("NotFound", responseHeaders,
 				HttpStatus.OK);
-		
+
 	}
+	
+	
 }

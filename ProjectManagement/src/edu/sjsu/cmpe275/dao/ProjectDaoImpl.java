@@ -30,7 +30,6 @@ public class ProjectDaoImpl implements ProjectDao{
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
-			System.out.println("Project with owner inside DAO is : "+ project.getOwner().getEmailid());		
 			session.save(project);
 			session.flush();
 			session.getTransaction().commit();
