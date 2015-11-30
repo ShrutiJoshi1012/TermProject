@@ -9,6 +9,6 @@ public interface ProjectDao {
 	Project getProject(int id);
 	void updateProject(Project project);	
 	void deleteProject(Project project);
-	List<Project> getAllProjects(int ownerId);
+	List<Project> getAllProjects(int personId);
 	boolean changeProjectState(int projectId,String newState);
 }

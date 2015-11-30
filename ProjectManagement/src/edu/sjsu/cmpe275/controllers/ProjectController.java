@@ -62,5 +62,15 @@ public class ProjectController {
 
 	}
 	
-	
+	// 3> API to get both projects and shared projects
+	@RequestMapping(value = "/getbothproject", method = RequestMethod.POST, produces = { "application/json" })
+	public @ResponseBody
+	ResponseEntity<?> getBothProject(
+			@RequestParam(value = "projectId") int projectId) {
+		System.out.println("Inside getBothProject API");
+		HttpHeaders responseHeaders = new HttpHeaders();
+		//Project project = projectDao.getProject(projectId);
+		
+		return null;
+	}
 }

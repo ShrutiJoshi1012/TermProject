@@ -40,7 +40,7 @@ public class PersonController {
 		if(!personDao.addPerson(person))
 		return new ResponseEntity<String>("fail", responseHeaders,
 				HttpStatus.OK);
-		return new ResponseEntity<String>("success", responseHeaders,
+		return new ResponseEntity<Person>(person, responseHeaders,
 				HttpStatus.OK);
 		
 	}
