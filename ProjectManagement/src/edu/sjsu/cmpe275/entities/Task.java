@@ -2,10 +2,13 @@ package edu.sjsu.cmpe275.entities;
 
 // Generated Nov 22, 2015 8:22:29 PM by Hibernate Tools 3.4.0.CR1
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -56,6 +59,8 @@ public class Task implements java.io.Serializable {
 		this.taskId = taskId;
 	}
 
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name ="PROJECT_ID")	
 	public Project getProject() {
 		return this.project;
 	}
@@ -64,6 +69,9 @@ public class Task implements java.io.Serializable {
 		this.project = project;
 	}
 
+	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name ="ASSIGNEE_ID")
 	public Person getAssignee() {
 		return this.assignee;
 	}

@@ -72,7 +72,7 @@ public class PersonController {
 			return new ResponseEntity<String>("fail", responseHeaders,
 					HttpStatus.OK);
 		person=personDao.getPerson(emailid);
-		model.addObject("person",person);
+		model.addObject("personSessionObj",person);
 		return model;
 		
 		
@@ -91,8 +91,6 @@ public class PersonController {
 		if (person == null || !person.getPassword().equals(password))
 			return new ResponseEntity<String>("NotFound", responseHeaders,
 					HttpStatus.BAD_REQUEST);
-		person.setPassword(null);
-		//model.addObject("person",person);
 		model.addObject("personSessionObj",person);
 		return model;
 		

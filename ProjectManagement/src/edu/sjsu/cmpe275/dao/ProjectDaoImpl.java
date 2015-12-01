@@ -91,38 +91,6 @@ public class ProjectDaoImpl implements ProjectDao{
 	// 5> Get all projects from the database
 	@Override
 	public List<Project> getAllProjects(int Id) {
-		/*System.out.println("IN GetAllProject");
-		List<Project> project = null;
-		List<SharedProjects> sharedproject = null;
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			session.beginTransaction();
-			 project=  session.createQuery("from PROJECT where OWNER_ID= :Id")
-					 .setParameter("Id", Id).list();
-			 
-			 Person person=null;
-			 person= (Person) session.get(
-						Project.class, Id);
-			 person.getOwnedProjects();
-			 person.getSharedProjects();
-			 //
-			session.getTransaction().commit();
-		} catch (HibernateException e) {
-			//e.printStackTrace();
-			System.out.println("Hibernate exception occured");
-			session.getTransaction().rollback();
-		}
-		try {
-			session.beginTransaction();
-			 project=  (List<Project>) session.get(
-					Project.class, Id);
-			session.getTransaction().commit();
-		} catch (HibernateException e) {
-			//e.printStackTrace();
-			System.out.println("Hibernate exception occured");
-			session.getTransaction().rollback();
-		}
-		//return project;*/
 		return null;
 	}
 
@@ -133,5 +101,6 @@ public class ProjectDaoImpl implements ProjectDao{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 
 }

@@ -43,7 +43,6 @@
                 </div>
                 <!-- /.row -->
                 <div class="col-lg-12">
-                        <h2 align = "center">List of Projects</h2>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover table-striped">
                                 <thead>
@@ -81,11 +80,11 @@
           									<button type="submit" class="btn btn-success">Delete Project</button>
           								</td>                          	
           								<td>
-          								    <a href = "${pageContext.servletContext.contextPath}/createtask"><button type="submit" class="btn btn-warning">Create Task</button></a>
+          								    <a href = "${pageContext.servletContext.contextPath}/createtask/<% out.print(person.getOwnedProjects().get(i).getProjectId()); %>"><button type="submit" class="btn btn-warning">Create Task</button></a>
     
           								</td>
           								 <td>
-          								    <a href = "${pageContext.servletContext.contextPath}/listtask"><button type="submit" class="btn btn-danger">List Task</button></a>
+          								    <a href = "${pageContext.servletContext.contextPath}/listtask/<%out.print(person.getOwnedProjects().get(i).getProjectId());%>"><button type="submit" class="btn btn-danger">List Task</button></a>
     
           								</td>
     

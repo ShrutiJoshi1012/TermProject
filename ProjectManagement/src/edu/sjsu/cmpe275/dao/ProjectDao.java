@@ -2,6 +2,7 @@ package edu.sjsu.cmpe275.dao;
 
 import java.util.List;
 
+import edu.sjsu.cmpe275.entities.Person;
 import edu.sjsu.cmpe275.entities.Project;
 
 public interface ProjectDao {
@@ -11,4 +12,5 @@ public interface ProjectDao {
 	void deleteProject(Project project);
 	List<Project> getAllProjects(int personId);
 	boolean changeProjectState(int projectId,String newState);
+	
 }

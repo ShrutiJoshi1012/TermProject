@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.*;
 
 import edu.sjsu.cmpe275.entities.Person;
 import edu.sjsu.cmpe275.entities.Project;
+import edu.sjsu.cmpe275.entities.SharedProjects;
 
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 public class PersonDaoImpl implements PersonDao {
@@ -92,14 +93,32 @@ public class PersonDaoImpl implements PersonDao {
 						ownedProjects.get(i).setOwner(null);
 					person.setOwnedProjects(ownedProjects);
 				}
+				List<Project> shProj = new ArrayList<Project>();
+
+				List<SharedProjects> sharedProjects = session
+						.createQuery(
+								"from SharedProjects where SHARED_PRSN_ID = :id")
+						.setParameter("id", person.getPersonId()).list();
+				System.out.println("shared project list "
+						+ sharedProjects.size());
+				for (int i = 0; i < sharedProjects.size(); i++) {
+
+					shProj.add((Project) session.get(Project.class,
+							sharedProjects.get(i).getSharedPrjctId()));
+					shProj.get(i).setOwner(null);
+
+				}
+
+				person.setSharedProjects(shProj);
 
 			}
+
 			session.getTransaction().commit();
 		} catch (HibernateException e) {
-			// e.printStackTrace();
 			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 		}
+
 		return person;
 	}
 
@@ -130,8 +149,36 @@ public class PersonDaoImpl implements PersonDao {
 	// 4> Delete a Person in the database
 	@Override
 	public void deletePerson(Person person) {
-		// TODO Auto-generated method stub
 
+	}
+
+	public List<Person> getProjectTeam(int projectId) {
+		System.out.println("IN UpdatePerson");
+		Session session = sessionFactory.getCurrentSession();
+		List<Person> team = new ArrayList<Person>();
+		try {
+			session.beginTransaction();
+			List<SharedProjects> sharedProjectsList = session
+					.createQuery(
+							"from SharedProjects where SHARED_PRJCT_ID = :id")
+					.setParameter("id", projectId).list();
+			for (int i = 0; i < sharedProjectsList.size(); i++) {
+
+				team.add((Person) session.get(Person.class, sharedProjectsList
+						.get(i).getSharedPrsnId()));
+
+			}
+			
+
+	
+			session.getTransaction().commit();
+		} catch (HibernateException e) {
+			// e.printStackTrace();
+			System.out.println("Hibernate exception occured");
+			session.getTransaction().rollback();
+			return null;
+		}
+		return team;
 	}
 
 }
