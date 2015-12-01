@@ -84,7 +84,6 @@ public class PersonDaoImpl implements PersonDao {
 					.setParameter("emailid", emailid).list();
 			if (persons.size() > 0) {
 				person = persons.get(0);
-
 				List<Project> ownedProjects = session
 						.createQuery("from Project where OWNER_ID = :id")
 						.setParameter("id", person.getPersonId()).list();

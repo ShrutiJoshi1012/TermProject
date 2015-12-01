@@ -68,6 +68,8 @@ http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<mvc:annotation-driven
 		content-negotiation-manager="contentNegotiationManager" />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+		
 	<bean id="contentNegotiationManager"
 		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 		<property name="defaultContentType" value="application/json" />
