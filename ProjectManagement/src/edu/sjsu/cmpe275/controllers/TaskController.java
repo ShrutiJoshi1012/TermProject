@@ -56,13 +56,29 @@ public class TaskController {
 	public Object listTask(@PathVariable("projectid") int projectid,
 			ModelAndView model, HttpServletRequest request) {
 		model.setViewName("listTask");
+		model.addObject("project", currProjectDao.getProject(projectid));
 		model.addObject("tasks", taskDao.getAllTasks(projectid));
 		return model;
 	}
 	
-	@RequestMapping(value = "/updatetask", method = RequestMethod.GET, produces = { "text/html" })
-	public Object updateTask(ModelAndView model, HttpServletRequest request) {
+	@RequestMapping(value = "/updatetask/{projectid}/{taskid}", method = RequestMethod.GET, produces = { "text/html" })
+	public Object updateTask(@PathVariable("taskid") int taskid,@PathVariable("projectid") int projectid,ModelAndView model, HttpServletRequest request) {
 		model.setViewName("updateTask");
+		Task task=taskDao.getTask(taskid);
+		model.addObject("sharedPersons", projOwnerDao.getProjectTeam(projectid));
+		model.addObject("task", task);
+		return model;
+	}
+	
+	@RequestMapping(value = "/canceltask/{projectid}/{taskid}", method = RequestMethod.GET, produces = { "text/html" })
+	public Object cancelTask(@PathVariable("taskid") int taskid,@PathVariable("projectid") int projectid,
+			ModelAndView model, HttpServletRequest request) {
+		model.setViewName("listTask");
+		Task task=taskDao.getTask(taskid);
+		task.getTaskDetail().setState("Cancelled");
+		taskDao.deleteTask(task);
+		model.addObject("tasks", taskDao.getAllTasks(projectid));
+		model.addObject("project", currProjectDao.getProject(projectid));
 		return model;
 	}
 	
@@ -88,8 +104,56 @@ public class TaskController {
 		taskDao.addTask(task);
 		model.addObject("tasks", taskDao.getAllTasks(projectid));
 		model.addObject("currProject", currProject);
+		model.addObject("project", currProject);
 		return model;
 	}
 	
+	
+
+	// 2> API to update task for a project
+@RequestMapping(value = "/updatetask", method = RequestMethod.POST, produces = { "text/html" })
+public Object updateTask(@RequestParam(value ="projectId") int projectid,
+		@RequestParam(value ="taskId") int taskid,
+		@RequestParam(value ="title") String title,
+		@RequestParam(value ="description") String description,
+		@RequestParam(value ="assigneeid") String assigneeid,
+		@RequestParam(value ="state") String state,
+		@RequestParam(value ="estimatedwork") int estimatedwork,
+		@RequestParam(value ="actualwork") int actualwork,
+		ModelAndView model, 
+		HttpServletRequest request){
+	System.out.println("Inside update  Task API ");
+	HttpHeaders responseHeaders = new HttpHeaders();
+	model.setViewName("listTask");
+	Task task = new Task();
+	task.setTaskId(taskid);
+	task.setActualWork(actualwork);
+	task.setEstimatedWork(estimatedwork);
+	task.setTaskDetail(new EntityDetail(title,description,state));
+	task.setAssignee(projOwnerDao.getPerson(assigneeid));
+	Project currProj=currProjectDao.getProject(projectid);
+	task.setProject(currProj);
+	taskDao.updateTask(task);
+	model.addObject("tasks", taskDao.getAllTasks(currProj.getProjectId()));
+	model.addObject("currProj", currProj);
+	model.addObject("project", currProj);
+	return model;
+}
+
+@RequestMapping(value = "/getpersontasks", method = RequestMethod.POST, produces = { "text/html" })
+public Object getAllTasksForPerson(@ModelAttribute("currProj") Project currProject,
+		@RequestParam(value ="personId") int personId,
+		ModelAndView model, 
+		HttpServletRequest request){
+	System.out.println("Inside get  Tasks of person API ");
+	HttpHeaders responseHeaders = new HttpHeaders();
+	
+	
+	//taskDao.updateTask(task);
+	model.addObject("tasks", taskDao.getAllTasks(currProject.getProjectId()));
+	model.addObject("currProject", currProject);
+	return model;
+}
+
 }
 

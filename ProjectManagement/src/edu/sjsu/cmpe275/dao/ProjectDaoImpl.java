@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.sjsu.cmpe275.entities.Project;
 import edu.sjsu.cmpe275.entities.SharedProjects;
-
 import edu.sjsu.cmpe275.entities.Person;
 
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -77,8 +76,25 @@ public class ProjectDaoImpl implements ProjectDao{
 
 	// 3> Update a Project in the database
 	@Override
-	public void updateProject(Project project) {
-		
+	public boolean updateProject(Project project) {
+		System.out.println("IN UpdateProject");
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.update(project);	
+			session.getTransaction().commit();
+			System.out.println("update project result: success");
+		} catch (JDBCConnectionException e) {
+			System.out.println("Connection lost");
+			session.getTransaction().rollback();
+			return false;
+		} catch (HibernateException e) {
+			// e.printStackTrace();
+			System.out.println("Hibernate exception occured");
+			session.getTransaction().rollback();
+			return false;
+		}
+		return true;
 	}
 	
 	

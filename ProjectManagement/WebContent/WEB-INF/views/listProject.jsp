@@ -2,16 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>InfoSoft</title>
+<head>    
 
 </head>
 <body>
@@ -49,18 +40,22 @@
                                     <tr>
                                         <th>Project Name</th>
                                         <th>Description</th>
+                                        
                                         <th>Team Members</th>
+                                        <th>View Progress Report</th>
                                         <th>Project State</th>
                                         <th>Update Project</th>
-                                        <th>Delete Project</th>
+                                        
+                                       
                                         <th>Add Tasks</th>
                                         <th>List Tasks</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                    	<% if (person.getOwnedProjects().size() > 0){
+                                <% if (person.getOwnedProjects().size() > 0){
                                     	for(int i =0; i<person.getOwnedProjects().size();  i++) {%>
+                                    	
+                                    <tr>
                                     	<td>
                                     		<% out.print(person.getOwnedProjects().get(i).getProjectDetail().getTitle());%>
                                     	</td>
@@ -68,28 +63,90 @@
                                     		<% out.print(person.getOwnedProjects().get(i).getProjectDetail().getDescription());%>
                                     	</td>
                                     	<td>
-                                    		<button type = "submit" class = "btn btn-info"/>View Team Members</button>
+                                    		<button type = "submit" class = "btn btn-info" data-toggle="modal" data-target="#team_<%out.print(person.getOwnedProjects().get(i).getProjectId());%>"/>View Team</button>
+                                    	</td>
+                                    	
+                                    	<td>
+                                    		<button type = "submit" class = "btn btn-info" data-toggle="modal" data-target="#report"/>View Progress Report</button>
                                     	</td>
                                     	<td>
                                     		<% out.print(person.getOwnedProjects().get(i).getProjectDetail().getState());%>
                                     	</td>
+                                    	<% if(person.getOwnedProjects().get(i).getProjectDetail().getState().equals("Completed")||person.getOwnedProjects().get(i).getProjectDetail().getState().equals("Cancelled")){ %>
+                                    	  <td><p>Project Status -> <%out.print(person.getOwnedProjects().get(i).getProjectDetail().getState()); %></p></td>
+                                    	<%}else{ %>
                                     	<td>
-                                    		<a href = "${pageContext.servletContext.contextPath}/updateproject"><button type="submit" class="btn btn-primary">Update Project</button></a>
+                                    		<a href = "${pageContext.servletContext.contextPath}/updateproject/<%out.print(person.getOwnedProjects().get(i).getProjectId());%>"><button type="submit" class="btn btn-primary">Update Project</button></a>
                                     	</td>
-          								<td>
-          									<button type="submit" class="btn btn-success">Delete Project</button>
-          								</td>                          	
+                                    	<%} %>
+          								  <% if(person.getOwnedProjects().get(i).getProjectDetail().getState().equals("Planning")||person.getOwnedProjects().get(i).getProjectDetail().getState().equals("Ongoing")){ %>                      	
           								<td>
           								    <a href = "${pageContext.servletContext.contextPath}/createtask/<% out.print(person.getOwnedProjects().get(i).getProjectId()); %>"><button type="submit" class="btn btn-warning">Create Task</button></a>
     
           								</td>
-          								 <td>
-          								    <a href = "${pageContext.servletContext.contextPath}/listtask/<%out.print(person.getOwnedProjects().get(i).getProjectId());%>"><button type="submit" class="btn btn-danger">List Task</button></a>
+          								<%} else{%>
+          								<td>
+          								    <p>Project State -> <%out.print(person.getOwnedProjects().get(i).getProjectDetail().getState()); %> <br> Cannot Add Tasks!</p>
     
           								</td>
-    
+          								<%} %>
+          								 <td>
+          								    <a href = "${pageContext.servletContext.contextPath}/listtask/<%out.print(person.getOwnedProjects().get(i).getProjectId());%>"><button type="submit" class="btn btn-danger">List Task</button></a>
+          								</td>
+
                                     </tr>
+                                    <!-- Modal -->
+										<div id="team_<%out.print(person.getOwnedProjects().get(i).getProjectId());%>" class="modal fade" role="dialog">
+										  <div class="modal-dialog">
+										
+										    <!-- Modal content-->
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <button type="button" class="close" data-dismiss="modal">&times;</button>
+										        <h4 class="modal-title">Modal Header</h4>
+										      </div>
+										      <div class="modal-body">
+										        <p>Team Members</p>
+										        <%out.print(person.getOwnedProjects().get(i).getProjectDetail().getTitle());%>
+										      </div>
+										      <div class="modal-footer">
+										        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										      </div>
+										    </div>
+										
+										  </div>
+										</div>
+								  
                                     <% } }%>
+                                    <% if(person.getSharedProjects().size() > 0){
+                                    		for(int i = 0; i < person.getSharedProjects().size();i++ ){
+                                    	%>
+                                    	
+                                    <tr>
+                                    	<td><% out.print(person.getSharedProjects().get(i).getProjectDetail().getTitle());%></td>
+                                    	<td><% out.print(person.getSharedProjects().get(i).getProjectDetail().getDescription());%></td>
+                                    	
+                                    	<td>
+                                    		<button type = "submit" class = "btn btn-info" data-toggle="modal" data-target="#team"/>View Team</button>
+                                    	</td>
+                                    	<td>
+                                    		<button type = "submit" class = "btn btn-info" data-toggle="modal" data-target="#report"/>View Progress Report</button>
+                                    	</td>
+                                    	<td><% out.print(person.getSharedProjects().get(i).getProjectDetail().getState()); %></td>
+                                    	<td>Shared Project <br> Cannot Be Updated!</td>
+                                    	<% if(person.getSharedProjects().get(i).getProjectDetail().getState().equals("Planning") || person.getSharedProjects().get(i).getProjectDetail().getState().equals("Ongoing")){ %>
+                                    	<td>
+          								    <a href = "${pageContext.servletContext.contextPath}/createtask/<% out.print(person.getSharedProjects().get(i).getProjectId()); %>"><button type="submit" class="btn btn-warning">Create Task</button></a>
+    
+          								</td>
+                                    	<%}else{ %>
+                                    	<td>Project State -> <%out.print(person.getSharedProjects().get(i).getProjectDetail().getState()); %> <br> Cannot Add Tasks!</td>
+                                    	<%} %>
+                                    	<td>
+          								    <a href = "${pageContext.servletContext.contextPath}/listtask/<%out.print(person.getSharedProjects().get(i).getProjectId());%>"><button type="submit" class="btn btn-danger">List Task</button></a>
+          								</td>
+                                    </tr>
+                                    	<% }} %>
                                 </tbody>
                             </table>
                         </div>
@@ -103,6 +160,7 @@
 
     </div>
     <!-- /#wrapper -->
-
+	
+		
 </body>
 </html>

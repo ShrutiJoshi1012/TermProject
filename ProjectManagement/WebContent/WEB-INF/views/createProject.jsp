@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>InfoSoft</title>
+    <title>Proj-Share</title>
 	
 </head>
 <body>
@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Project Management <small>Overview</small>
+                            Proj-Share <small>Overview</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
@@ -47,7 +47,7 @@
                     	 <form role="form" action = "${pageContext.servletContext.contextPath}/addproject" method = "post">
                     	 	<div class="form-group">
                                 <label>Project Title:</label>
-                                <input class="form-control" name = "title" value = "title" placeholder="Give Your Project A Name">
+                                <input class="form-control" name = "title" value = "" placeholder="Give Your Project A Name">
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
@@ -64,6 +64,15 @@
                             </div>
                             <button type="submit" class="btn btn-info">Create</button>
                             <button type="reset" class="btn btn-success">Reset</button>
+                             <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                             <br/>
+                            <br/>
+                            <br/>
+                            <br/>
                     	 </form>
                     </div>
                 </div>

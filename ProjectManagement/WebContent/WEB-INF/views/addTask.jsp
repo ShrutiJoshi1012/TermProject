@@ -33,7 +33,7 @@ edu.sjsu.cmpe275.entities.Project currProject = (edu.sjsu.cmpe275.entities.Proje
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Project Management<small>Overview</small>
+                            Proj-Share<small>Overview</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
@@ -80,7 +80,7 @@ edu.sjsu.cmpe275.entities.Project currProject = (edu.sjsu.cmpe275.entities.Proje
                             </div>
                             <div class = "form-group">
                             	<label>Estimated Units of work:</label><br>
-                            	<input class="form-control" name = "estimatedwork" value = "" placeholder="Estimated Weeks of Work" message="Please enter Estimated Work..." required/>
+                            	<input class="form-control" name = "estimatedwork" value = "" placeholder="Estimated Weeks of Work" message="Please enter Estimated Work..." />
                             </div>
                             <div>
                             	<input type = "hidden" name = "actualwork" value = "0">

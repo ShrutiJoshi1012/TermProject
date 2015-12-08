@@ -11,10 +11,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>InfoSoft</title>
+    <title>Proj-Share</title>
 </head>
 <body>
-		
+	           <% 
+edu.sjsu.cmpe275.entities.Project project= (edu.sjsu.cmpe275.entities.Project) request
+				.getAttribute("project");
+	           
+	           %>
     <div id="wrapper">
 		<div id="navigation">
 			<%@ include file = "common.jsp" %>
@@ -28,7 +32,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Project Management<small>Overview</small>
+                            Proj-Share<small>Overview</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
@@ -46,52 +50,46 @@
                 <!-- /.row -->
 				<div class="row">
                     <div class="col-lg-offset-3 col-lg-5">
-                    	 <form role="form" action = "/ProjectManagementUI2/listProject" method = "get">
+                    	 <form role="form" action = "${pageContext.servletContext.contextPath}/updateproject" method = "post">
+                    	 <input class="form-control" type="hidden" name="projectid" value="<% out.print(project.getProjectId()); %>">
+                    	 	<input class="form-control" type="hidden" name="ownerid" value="<% out.print(project.getOwner().getEmailid()); %>">
                     	 	<div class="form-group">
                                 <label>Project Title:</label>
-                                <input class="form-control" placeholder="Give Your Project A Name">
+                                <input class="form-control" placeholder="Give Your Project A Name" name="title" value="<% out.print(project.getProjectDetail().getTitle()); %>">
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea class="form-control" placeholder="Desribe the project in brief!"></textarea>
+                                <textarea class="form-control" placeholder="Desribe the project in brief!" name="description"><% out.print(project.getProjectDetail().getDescription()); %></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Tick the Members you want to remove</label>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="">Abc
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="">Pqr
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="">Xyz
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="">Jdk
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Project State  &nbsp </label><br>
-                                <label class="radio-inline">
-                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked>Planning
+                               
+                                 <div class="form-group">
+                                <label>Current State:</label>
+                                <input class="form-control"   name="prev_state"  value="<%out.print(project.getProjectDetail().getState());%>" readonly/>
+                           		 </div>
+                           		  <label>Enter New State:  &nbsp </label><br>
+                                <%if(project.getProjectDetail().getState().equals("Planning")){ %>
+                              
+                                 <label class="radio-inline">
+                                    <input type="radio" name="new_state"  value="Ongoing">Ongoing
                                 </label>
                                  <label class="radio-inline">
-                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1">Ongoing
+                                    <input type="radio" name="new_state"  value="Cancelled">Cancelled
                                 </label>
                                  <label class="radio-inline">
-                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1">Cancelled
+                                    <input type="radio" name="new_state"  value="Completed" >Completed
+                                </label>
+                                <%} %>
+                                <%if(project.getProjectDetail().getState().equals("Ongoing")){ %>
+                              
+                                
+                                 <label class="radio-inline">
+                                    <input type="radio"   name="new_state" value="Cancelled">Cancelled
                                 </label>
                                  <label class="radio-inline">
-                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" >Completed
+                                    <input type="radio"  name="new_state" value="Completed" >Completed
                                 </label>
+                                <%} %>
                             </div>
                             <button type="submit" class="btn btn-info">Update</button>
                             <button type="reset" class="btn btn-success">Reset</button>

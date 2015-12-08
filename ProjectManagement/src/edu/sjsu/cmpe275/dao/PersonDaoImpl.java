@@ -93,32 +93,30 @@ public class PersonDaoImpl implements PersonDao {
 						ownedProjects.get(i).setOwner(null);
 					person.setOwnedProjects(ownedProjects);
 				}
-				List<Project> shProj = new ArrayList<Project>();
+				List<Project> sharedProjects = new ArrayList<Project>();
 
-				List<SharedProjects> sharedProjects = session
+				List<SharedProjects> sharedProjectEntries = session
 						.createQuery(
-								"from SharedProjects where SHARED_PRSN_ID = :id")
+								"from SharedProjects where SHARED_PRSN_ID = :id and accepted_flag='Y'")
 						.setParameter("id", person.getPersonId()).list();
-				System.out.println("shared project list "
-						+ sharedProjects.size());
-				for (int i = 0; i < sharedProjects.size(); i++) {
+				if (sharedProjectEntries.size() > 0) {
+					for (int i = 0; i < sharedProjectEntries.size(); i++) {
 
-					shProj.add((Project) session.get(Project.class,
-							sharedProjects.get(i).getSharedPrjctId()));
-					shProj.get(i).setOwner(null);
+						sharedProjects.add(sharedProjectEntries.get(i)
+								.getSharedProject());
+						sharedProjects.get(i).setOwner(null);
 
+					}
+
+					person.setSharedProjects(sharedProjects);
 				}
-
-				person.setSharedProjects(shProj);
-
 			}
-
 			session.getTransaction().commit();
 		} catch (HibernateException e) {
+			// e.printStackTrace();
 			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 		}
-
 		return person;
 	}
 
@@ -164,13 +162,10 @@ public class PersonDaoImpl implements PersonDao {
 					.setParameter("id", projectId).list();
 			for (int i = 0; i < sharedProjectsList.size(); i++) {
 
-				team.add((Person) session.get(Person.class, sharedProjectsList
-						.get(i).getSharedPrsnId()));
+				team.add(sharedProjectsList.get(i).getSharedPerson());
 
 			}
-			
 
-	
 			session.getTransaction().commit();
 		} catch (HibernateException e) {
 			// e.printStackTrace();

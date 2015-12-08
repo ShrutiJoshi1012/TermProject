@@ -32,7 +32,11 @@ http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 			<ref bean="sessionFactory" />
 		</constructor-arg>
 	</bean>
-
+	<bean id="invitePersonDao" class="edu.sjsu.cmpe275.dao.PersonDaoImpl">
+		<constructor-arg>
+			<ref bean="sessionFactory" />
+		</constructor-arg>
+	</bean>
 	<bean id="taskDao" class="edu.sjsu.cmpe275.dao.TaskDaoImpl">
 		<constructor-arg>
 			<ref bean="sessionFactory" />

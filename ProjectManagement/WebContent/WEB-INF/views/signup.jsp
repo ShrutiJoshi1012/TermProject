@@ -6,7 +6,7 @@
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 <meta charset="UTF-8">
 
-<title>InfoSoft</title>
+<title>Proj-Share</title>
 <style>
 body {
     background: url('http://i.imgur.com/Eor57Ae.jpg') no-repeat fixed center center;
@@ -91,20 +91,29 @@ body {
 }
 
 </style>
+
+
+
 </head>
 
 <body>
 
-
+<br><br><br><br>
 <div class="login-block">
     <h1>Sign Up</h1>
+    <div id = "error"  style = "text-align : center; color: red">
+	     <c:if test="${message.message != null}">
+		    <span id="username.errors" class="error">${message.message}</span>
+		</c:if>
+	</div>
     <form action = "${pageContext.servletContext.contextPath}/signup" method = "POST">
-    <input type="text" value="" placeholder="Username" name = "name" id="name" />
-    <input type="email" value="" placeholder="Email Address" name = "emailid" id="emailid" />
-    <input type="password" value="" placeholder="Password" name="password" id="password" />
-    <input type="password" value="" placeholder="Confirm Password" name="c_password" id="c_password" />
-     <input type="hidden" value="" name="description" id="description" />
-    <input type ="submit" value="Sign Up" name="signup"/>
+      <form:errors path="userName" cssClass="error" />
+      <input type="text" value="" placeholder="Username" name = "name" id="name" required/>
+      <input type="email" value="" placeholder="Email Address" name = "emailid" id="emailid" required/>
+      <input type="password" value="" placeholder="Password" name="password" id="password" required/>
+      <input type="password" value="" placeholder="Confirm Password" name="c_password" id="c_password" required/>
+      <input type="hidden" value="" name="description" id="description" />
+      <input type ="submit" value="Sign Up" name="signup"/>
     </form>
 </div>
 </body>

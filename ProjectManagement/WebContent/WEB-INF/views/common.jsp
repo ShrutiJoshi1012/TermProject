@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Project Management</title>
+    <title>Proj-Share</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -31,6 +31,11 @@
     <%
 		edu.sjsu.cmpe275.entities.Person person = (edu.sjsu.cmpe275.entities.Person) request
 				.getAttribute("personSessionObj");
+    java.util.List<edu.sjsu.cmpe275.entities.SharedProjects>  invites= new  java.util.ArrayList<edu.sjsu.cmpe275.entities.SharedProjects>();
+    		
+    		if(request.getAttribute("invites") != null)
+    			invites.addAll((java.util.List<edu.sjsu.cmpe275.entities.SharedProjects>) request
+        	 			.getAttribute("invites"));
     %>
     		
     <div id="wrapper">
@@ -45,90 +50,38 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="${pageContext.servletContext.contextPath}/dashboard">InfoSoft - Admin</a>
+                <a class="navbar-brand" href="${pageContext.servletContext.contextPath}/dashboard">Proj-Share!</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><button>Invitations <span class="badge"><% out.print(invites.size());%></span></button><b class="caret"></b></a>
                     <ul class="dropdown-menu message-dropdown">
+                      		 <%if(invites.size()>0){
+                    	for(int i=0;i<invites.size();i++){
+                    	%>
+                   
                         <li class="message-preview">
                             <a href="#">
                                 <div class="media">
+                                <a href="${pageContext.servletContext.contextPath}/acceptinvite/<% out.print(invites.get(i).getSharedProject().getProjectId()); %>/<% out.print(person.getPersonId()); %>" >
                                     <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        <img class="media-object" src = "${pageContext.servletContext.contextPath}/resources/images/accept.jpg">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        <h5 class="media-heading"><strong><% out.print("Project: "+invites.get(i).getSharedProject().getProjectDetail().getTitle()); %></strong>
                                         </h5>
+                                         <strong><% out.print("Owner: "+invites.get(i).getSharedProject().getOwner().getName()); %></strong>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        </a>
                                     </div>
                                 </div>
                             </a>
                         </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-footer">
-                            <a href="#">Read All New Messages</a>
-                        </li>
+                        <%} }%>
                     </ul>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">View All</a>
-                        </li>
-                    </ul>
-                </li>
+                
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
                     <%  if(person != null){
@@ -137,14 +90,11 @@
                     <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            <a href="${pageContext.servletContext.contextPath}/updateprofile"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="${pageContext.servletContext.contextPath}/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -165,7 +115,7 @@
                                 <a href="${pageContext.servletContext.contextPath}/getallprojects">List Projects</a>
                             </li>
                             <li>
-                                <a href="#">Invitation</a>
+                                <a href="${pageContext.servletContext.contextPath}/invitation">Invitation</a>
                             </li>
                         </ul>
                     </li>
@@ -184,7 +134,7 @@
     <!-- Morris Charts JavaScript -->
     <script src="${pageContext.servletContext.contextPath}/resources/js/plugins/morris/raphael.min.js"></script>
     <script src="${pageContext.servletContext.contextPath}/resources/js/plugins/morris/morris.min.js"></script>
-    <script src="${pageContext.servletContext.contextPath}/resources/js/plugins/morris/morris-data.js"></script>
+   <!--   <script src="${pageContext.servletContext.contextPath}/resources/js/plugins/morris/morris-data.js"></script>-->
 
 </body>
 </html>

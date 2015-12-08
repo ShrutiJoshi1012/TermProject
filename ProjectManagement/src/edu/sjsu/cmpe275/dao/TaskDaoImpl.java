@@ -55,18 +55,70 @@ public class TaskDaoImpl implements TaskDao{
 	@Override
 	public Task getTask(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		System.out.println("IN UpdateTask");
+		Session session = sessionFactory.getCurrentSession();
+		Task task=null;
+		try {
+			session.beginTransaction();
+			task=(Task)session.get(Task.class,id);
+			session.getTransaction().commit();
+			System.out.println("update task : success");
+		} catch (JDBCConnectionException e) {
+			System.out.println("Connection lost");
+			session.getTransaction().rollback();
+			return null;
+		} catch (HibernateException e) {
+			//e.printStackTrace();
+			System.out.println("Hibernate exception occured");
+			session.getTransaction().rollback();
+			return null;
+		}
+		return task;
 	}
 
-	@Override
-	public boolean updateTask(Task task) {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	// Update Task
+		@Override
+		public boolean updateTask(Task task) {
+			System.out.println("IN UpdateTask");
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				session.saveOrUpdate(task);
+				session.getTransaction().commit();
+				System.out.println("update task : success");
+			} catch (JDBCConnectionException e) {
+				System.out.println("Connection lost");
+				session.getTransaction().rollback();
+				return false;
+			} catch (HibernateException e) {
+				//e.printStackTrace();
+				System.out.println("Hibernate exception occured");
+				session.getTransaction().rollback();
+				return false;
+			}
+			return true;
+		}
 
 	@Override
 	public boolean deleteTask(Task task) {
 		// TODO Auto-generated method stub
+		System.out.println("IN UpdateTask");
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.update(task);
+			session.getTransaction().commit();
+			System.out.println("Cancel task : success");
+		} catch (JDBCConnectionException e) {
+			System.out.println("Connection lost");
+			session.getTransaction().rollback();
+			return false;
+		} catch (HibernateException e) {
+			//e.printStackTrace();
+			System.out.println("Hibernate exception occured");
+			session.getTransaction().rollback();
+			return false;
+		}
 		return true;
 	}
 

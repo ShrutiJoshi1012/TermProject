@@ -7,6 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,12 +46,14 @@ public class ProjectController {
 			@RequestMapping(value = "/getallprojects", method = RequestMethod.GET, produces = { "text/html" })
 			public Object getAllProjects(ModelAndView model, HttpServletRequest request) {
 					model.setViewName("listProject");
+					
 					return model;
 			}
     //3> Update Project handler
-			@RequestMapping(value = "/updateproject", method = RequestMethod.GET, produces = { "text/html" })
-			public Object updateProject(ModelAndView model, HttpServletRequest request) {
+			@RequestMapping(value = "/updateproject/{projectid}", method = RequestMethod.GET, produces = { "text/html" })
+			public Object updateProject(@PathVariable("projectid")int projectid,ModelAndView model, HttpServletRequest request) {
 					model.setViewName("updateProject");
+					model.addObject("project",projectDao.getProject(projectid));
 					return model;
 			}
 			
@@ -66,9 +70,16 @@ public class ProjectController {
 		Project project = new Project();
 		project.setOwner(ownerDao.getPerson(emailid));
 		project.setProjectDetail(new EntityDetail(title, description, state));
+		
+		
 		if (!projectDao.addProject(project))
 			return new ResponseEntity<String>("fail", responseHeaders,
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
+		Person person=ownerDao.getPerson(emailid);
+	    model.addObject("personSessionObj",person);
+	    System.out.println("No of owned projects: "+person.getOwnedProjects().size());
+		System.out.println("No of shared projects: "+person.getSharedProjects().size());
+
 		return model;
 
 	}
@@ -98,4 +109,31 @@ public class ProjectController {
 		HttpHeaders responseHeaders = new HttpHeaders();		
 		return null;
 	}
+	
+	@RequestMapping(value = "/updateproject", method = RequestMethod.POST, produces = {"text/html"})
+	public Object updateProjectPost(@RequestParam(value="projectid") int projectid,
+			@RequestParam(value="title") String title,
+			@RequestParam(value="description") String description,
+			@RequestParam(value="prev_state",required = false) String prev_state,
+			@RequestParam(value="new_state",required = false) String new_state,
+			@RequestParam(value="ownerid") String ownerid,
+			ModelAndView model, HttpServletRequest request){
+		System.out.println("Update Project API");
+		model.setViewName("listProject");
+		Project project = new Project();
+		project.setProjectId(projectid);
+		project.setOwner(ownerDao.getPerson(ownerid));
+		String state=prev_state;
+		System.out.println("Pre v state" +prev_state);
+		System.out.println("New state" +new_state);
+		if(new_state != null)
+			state=new_state;
+		
+		System.out.println("Current state" +state);
+		project.setProjectDetail(new EntityDetail(title,description,state));
+		projectDao.updateProject(project);
+		model.addObject("personSessionObj", ownerDao.getPerson(ownerid));
+		return model;
+	}
+	
 }

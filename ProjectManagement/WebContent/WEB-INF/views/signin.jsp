@@ -6,7 +6,7 @@
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 <meta charset="UTF-8">
 
-<title>InfoSoft</title>
+<title>Proj-Share</title>
 <style>
 body {
     background: url('http://i.imgur.com/Eor57Ae.jpg') no-repeat fixed center center;
@@ -95,14 +95,22 @@ body {
 
 <body>
 
-
+<br><br><br><br>
 <div class="login-block">
-    <h1>Login</h1>
+    <h1>SignIn</h1>
+    <div  style = "text-align : center; color: red">
+	    <c:if test="${message.message != null}">
+		    <span id="username.errors" class="error">${message.message}</span>
+		</c:if>
+	</div>
     <form action = "${pageContext.servletContext.contextPath}/signin" method = "post">
+		<form:errors path="userName" cssClass="error" />
 	    <input type="email" value="" placeholder="Email" name = "emailid" id="emailid" required/>
 	    <input type="password" value="" placeholder="Password" name = "password" id="password" required/>
 	    <input type = "submit" value = "SignIn"/>
 	</form>
+    <p>Not a User?</p>
+	<button><a href = "${pageContext.servletContext.contextPath}/signup">SignUp</a></button>
 </div>
 </body>
 
