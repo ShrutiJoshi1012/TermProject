@@ -26,9 +26,6 @@ edu.sjsu.cmpe275.entities.Project  project= (edu.sjsu.cmpe275.entities.Project) 
                 <div class="row">
                     <div class="col-lg-12">
                         <h3 class="page-header">
-                           <small>Project Name: &nbsp<b><%out.print(project.getProjectDetail().getTitle()); %></b></small><br>
-                           <small>Project Owner: &nbsp<b><%out.print(project.getOwner().getName()); %></b></small><br>
-                           <small>Project State:  &nbsp<b><%out.print(project.getProjectDetail().getState()); %></b></small><br>
                         </h3>
                         <ol class="breadcrumb">
                             <li class="active">

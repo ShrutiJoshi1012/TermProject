@@ -100,66 +100,7 @@
           								</td>
 
                                     </tr>
-                                    <!-- Modal -->
-										<div id="team_<%out.print(person.getOwnedProjects().get(i).getProjectId());%>" class="modal fade" role="dialog">
-										  <div class="modal-dialog">
-										
-										    <!-- Modal content-->
-										    <div class="modal-content">
-										      <div class="modal-header">
-										        <button type="button" class="close" data-dismiss="modal">&times;</button>
-										        <h4 class="modal-title">Modal Header</h4>
-										      </div>
-										      <div class="modal-body">
-										       	 <p><b><%out.print(person.getOwnedProjects().get(i).getProjectDetail().getTitle());%></b></p>
-										        <p><b>Team Members</b></p>
-										        <p>Owner:</p><% out.print(person.getName()); %><br>
-										       
-										      </div>
-										      <div class="modal-footer">
-										        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										      </div>
-										    </div>
-										
-										  </div>
-										</div>
-										
-										<!-- Report Modal -->
-										<!-- Modal -->
-										<div id="report_<%out.print(person.getOwnedProjects().get(i).getProjectId());%>" class="modal fade" role="dialog">
-										  <div class="modal-dialog">
-										
-										    <!-- Modal content-->
-										    <div class="modal-content">
-										      <div class="modal-header">
-										        <button type="button" class="close" data-dismiss="modal">&times;</button>
-										        <h4 class="modal-title">Progress Report</h4>
-										      </div>
-										      <div class="modal-body">
-										      	<!-- Estimated Work -->
-										       	<div class="progress">
-												  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<% out.print(tasks.get(i).getEstimatedWork()); %>"
-												  aria-valuemin="0" aria-valuemax="100" style="width:40%">
-												    Estimated Work <%out.print(tasks.get(i).getEstimatedWork()); %>
-												  </div>
-												</div>
-												<!-- Actual Work -->
-												<div class="progress">
-												  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<% out.print(tasks.get(i).getActualWork()); %>"
-												  aria-valuemin="0" aria-valuemax="100" style="width:60%">
-												    Actual Work <% out.print(tasks.get(i).getActualWork()); %>
-												  </div>
-												</div>
-										      </div>
-										      <div class="modal-footer">
-										        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										      </div>
-										    </div>
-										
-										  </div>
-										</div>
-								  
-																			  
+										  
                                     <% } }%>
                                     <% if(person.getSharedProjects().size() > 0){
                                     		for(int i = 0; i < person.getSharedProjects().size();i++ ){
@@ -190,61 +131,6 @@
           								</td>
                                     </tr>
                                     	
-                                    
-                                    	<!-- Modal -->
-										<div id="team_<%out.print(person.getSharedProjects().get(i).getProjectId());%>" class="modal fade" role="dialog">
-										  <div class="modal-dialog">
-										
-										    <!-- Modal content-->
-										    <div class="modal-content">
-										      <div class="modal-header">
-										        <button type="button" class="close" data-dismiss="modal">&times;</button>
-										        <h4 class="modal-title">Modal Header</h4>
-										      </div>
-										      <div class="modal-body">
-										    
-										       <%out.print(person.getSharedProjects().get(i).getProjectDetail().getTitle());%>
-										       <p>Owner :</p><%out.print(person.getSharedProjects().get(i).getOwner()); %>
-										       <p>Team Members :</p>
-										       <% 
-										       		int projectId = person.getSharedProjects().get(i).getProjectId(); 
-										       		int task_projectId = tasks.get(i).getProject().getProjectId();
-										       		out.print(projectId);
-										       		out.print(task_projectId);
-										       	%>
-										      
-										      </div>
-										      <div class="modal-footer">
-										        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										      </div>
-										    </div>
-										
-										  </div>
-										</div>
-										
-										<!-- Report Modal -->
-										<!-- Modal -->
-										<div id="report_<%out.print(person.getSharedProjects().get(i).getProjectId());%>" class="modal fade" role="dialog">
-										  <div class="modal-dialog">
-										
-										    <!-- Modal content-->
-										    <div class="modal-content">
-										      <div class="modal-header">
-										        <button type="button" class="close" data-dismiss="modal">&times;</button>
-										        <h4 class="modal-title">Modal Header</h4>
-										      </div>
-										      <div class="modal-body">
-										       	Report
-										       <%out.print(person.getSharedProjects().get(i).getProjectDetail().getTitle());%>
-										      </div>
-										      <div class="modal-footer">
-										        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										      </div>
-										    </div>
-										
-										  </div>
-										</div>
-								  
                                     
                                     	<% }} %>
                                 </tbody>
