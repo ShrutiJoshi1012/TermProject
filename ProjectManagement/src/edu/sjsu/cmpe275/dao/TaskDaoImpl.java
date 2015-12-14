@@ -102,23 +102,6 @@ public class TaskDaoImpl implements TaskDao{
 	@Override
 	public boolean deleteTask(Task task) {
 		// TODO Auto-generated method stub
-		System.out.println("IN UpdateTask");
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			session.beginTransaction();
-			session.update(task);
-			session.getTransaction().commit();
-			System.out.println("Cancel task : success");
-		} catch (JDBCConnectionException e) {
-			System.out.println("Connection lost");
-			session.getTransaction().rollback();
-			return false;
-		} catch (HibernateException e) {
-			//e.printStackTrace();
-			System.out.println("Hibernate exception occured");
-			session.getTransaction().rollback();
-			return false;
-		}
 		return true;
 	}
 

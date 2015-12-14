@@ -70,18 +70,6 @@ public class TaskController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/canceltask/{projectid}/{taskid}", method = RequestMethod.GET, produces = { "text/html" })
-	public Object cancelTask(@PathVariable("taskid") int taskid,@PathVariable("projectid") int projectid,
-			ModelAndView model, HttpServletRequest request) {
-		model.setViewName("listTask");
-		Task task=taskDao.getTask(taskid);
-		task.getTaskDetail().setState("Cancelled");
-		taskDao.deleteTask(task);
-		model.addObject("tasks", taskDao.getAllTasks(projectid));
-		model.addObject("project", currProjectDao.getProject(projectid));
-		return model;
-	}
-	
 		// 1> API to create task for a project
 	@RequestMapping(value = "/createtask", method = RequestMethod.POST, produces = { "text/html" })
 	public Object createTask(@RequestParam(value ="projectid") int projectid,
@@ -104,7 +92,6 @@ public class TaskController {
 		taskDao.addTask(task);
 		model.addObject("tasks", taskDao.getAllTasks(projectid));
 		model.addObject("currProject", currProject);
-		model.addObject("project", currProject);
 		return model;
 	}
 	
@@ -135,8 +122,7 @@ public Object updateTask(@RequestParam(value ="projectId") int projectid,
 	task.setProject(currProj);
 	taskDao.updateTask(task);
 	model.addObject("tasks", taskDao.getAllTasks(currProj.getProjectId()));
-	model.addObject("currProj", currProj);
-	model.addObject("project", currProj);
+	model.addObject("currProject", currProj);
 	return model;
 }
 
