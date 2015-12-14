@@ -75,7 +75,7 @@ public class PersonDaoImpl implements PersonDao {
 	// 2> Get a Person from the database
 	@Override
 	public Person getPerson(String emailid) {
-		System.out.println("IN GetPerson");
+		
 		Person person = null;
 		Session session = sessionFactory.getCurrentSession();
 		try {
