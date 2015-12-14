@@ -56,7 +56,7 @@ public class PersonDaoImpl implements PersonDao {
 			System.out.println("create person result: success");
 		} catch (ConstraintViolationException e) {
 			System.out
-					.println("EmailID has to be a unique value. This value already exists.");
+					.println("EmailID has to be a unique value. This value already exists...");
 			session.getTransaction().rollback();
 			return false;
 		} catch (JDBCConnectionException e) {
