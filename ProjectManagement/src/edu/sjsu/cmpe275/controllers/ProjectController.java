@@ -105,7 +105,6 @@ public class ProjectController {
 	public @ResponseBody
 	ResponseEntity<?> getBothProject(
 			@RequestParam(value = "projectId") int projectId) {
-		System.out.println("Inside getBothProject API");
 		HttpHeaders responseHeaders = new HttpHeaders();		
 		return null;
 	}
@@ -118,7 +117,6 @@ public class ProjectController {
 			@RequestParam(value="new_state",required = false) String new_state,
 			@RequestParam(value="ownerid") String ownerid,
 			ModelAndView model, HttpServletRequest request){
-		System.out.println("Update Project API");
 		model.setViewName("listProject");
 		Project project = new Project();
 		project.setProjectId(projectid);

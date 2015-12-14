@@ -79,7 +79,7 @@ public class TaskController {
 			@RequestParam(value ="state") String state,
 			@RequestParam(value ="estimatedwork") int estimatedwork,
 			@RequestParam(value ="actualwork") int actualwork,ModelAndView model, HttpServletRequest request){
-		System.out.println("Inside create  Task API ");
+		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		model.setViewName("listTask");
 		Task task = new Task();
@@ -109,7 +109,6 @@ public Object updateTask(@RequestParam(value ="projectId") int projectid,
 		@RequestParam(value ="actualwork") int actualwork,
 		ModelAndView model, 
 		HttpServletRequest request){
-	System.out.println("Inside update  Task API ");
 	HttpHeaders responseHeaders = new HttpHeaders();
 	model.setViewName("listTask");
 	Task task = new Task();
@@ -131,7 +130,6 @@ public Object getAllTasksForPerson(@ModelAttribute("currProj") Project currProje
 		@RequestParam(value ="personId") int personId,
 		ModelAndView model, 
 		HttpServletRequest request){
-	System.out.println("Inside get  Tasks of person API ");
 	HttpHeaders responseHeaders = new HttpHeaders();
 	
 	
