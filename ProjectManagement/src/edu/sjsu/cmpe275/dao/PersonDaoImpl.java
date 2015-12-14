@@ -123,21 +123,18 @@ public class PersonDaoImpl implements PersonDao {
 	// 3> Update a Person in the database
 	@Override
 	public boolean updatePerson(Person person) {
-		System.out.println("IN UpdatePerson");
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			session.saveOrUpdate(person);
 			;
 			session.getTransaction().commit();
-			System.out.println("update person result: success");
 		} catch (JDBCConnectionException e) {
-			System.out.println("Connection lost");
+			
 			session.getTransaction().rollback();
 			return false;
 		} catch (HibernateException e) {
 			// e.printStackTrace();
-			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 			return false;
 		}
@@ -151,7 +148,6 @@ public class PersonDaoImpl implements PersonDao {
 	}
 
 	public List<Person> getProjectTeam(int projectId) {
-		System.out.println("IN UpdatePerson");
 		Session session = sessionFactory.getCurrentSession();
 		List<Person> team = new ArrayList<Person>();
 		try {
@@ -169,7 +165,6 @@ public class PersonDaoImpl implements PersonDao {
 			session.getTransaction().commit();
 		} catch (HibernateException e) {
 			// e.printStackTrace();
-			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 			return null;
 		}

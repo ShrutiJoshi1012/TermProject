@@ -28,26 +28,21 @@ public class ProjectDaoImpl implements ProjectDao{
 	// 1> Create a Project in the database
 	@Override
 	public boolean addProject(Project project) {
-		System.out.println("IN CreateProject");
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			session.save(project);
 			session.flush();
 			session.getTransaction().commit();
-			System.out.println("create project result: success");
 		} catch (ConstraintViolationException e) {
-			System.out
-					.println("Invalid Owner_Id.. add project failed");
+			
 			session.getTransaction().rollback();
 			return false;
 		} catch (JDBCConnectionException e) {
-			System.out.println("Connection lost");
 			session.getTransaction().rollback();
 			return false;
 		} catch (HibernateException e) {
 			//e.printStackTrace();
-			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 			return false;
 		}
@@ -58,7 +53,6 @@ public class ProjectDaoImpl implements ProjectDao{
 	// 2> Get a Project from the database
 	@Override
 	public Project getProject(int id) {
-		System.out.println("IN GetProject");
 		Project project = null;
 		Session session = sessionFactory.getCurrentSession();
 		try {
@@ -68,7 +62,6 @@ public class ProjectDaoImpl implements ProjectDao{
 			session.getTransaction().commit();
 		} catch (HibernateException e) {
 			//e.printStackTrace();
-			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 		}
 		return project;
@@ -77,20 +70,16 @@ public class ProjectDaoImpl implements ProjectDao{
 	// 3> Update a Project in the database
 	@Override
 	public boolean updateProject(Project project) {
-		System.out.println("IN UpdateProject");
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			session.update(project);	
 			session.getTransaction().commit();
-			System.out.println("update project result: success");
 		} catch (JDBCConnectionException e) {
-			System.out.println("Connection lost");
 			session.getTransaction().rollback();
 			return false;
 		} catch (HibernateException e) {
 			// e.printStackTrace();
-			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 			return false;
 		}
