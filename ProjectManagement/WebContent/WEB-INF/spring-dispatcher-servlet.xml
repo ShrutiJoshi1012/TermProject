@@ -70,7 +70,7 @@ http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 		<property name="url"
 			value="jdbc:mysql://localhost:3306/CMPE275_PROJECT_MGMT_DB" />
 		<property name="username" value="root" />
-		<property name="password" value="" />
+		<property name="password" value="test" />
 	</bean>
 
 	<bean id="sessionFactory"

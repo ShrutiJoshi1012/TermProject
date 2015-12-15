@@ -91,7 +91,7 @@ public class ProjectSharingController {
 						+ "\n"
 						+ "Password: abcd@123"
 						+ "\n"
-						+ "click here http://10.189.148.227:8080/ProjectManagement/signin");
+						+ "click here http://localhost:8080/ProjectManagement/signin");
 
 				Transport.send(message);
 

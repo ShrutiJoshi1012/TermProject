@@ -32,31 +32,31 @@ public class ProjectController {
 
 	@Autowired
 	private PersonDao ownerDao;
-
+	
 
 	// 1> Get Project handler
-	@RequestMapping(value = "/addproject", method = RequestMethod.GET, produces = { "text/html" })
-	public Object getDashboard(ModelAndView model, HttpServletRequest request) {
-		model.setViewName("createProject");
-		return model;
-	}
-
+			@RequestMapping(value = "/addproject", method = RequestMethod.GET, produces = { "text/html" })
+			public Object getDashboard(ModelAndView model, HttpServletRequest request) {
+				model.setViewName("createProject");
+				return model;
+			}
+	
 
 	// 2> Get Project handler
-	@RequestMapping(value = "/getallprojects", method = RequestMethod.GET, produces = { "text/html" })
-	public Object getAllProjects(ModelAndView model, HttpServletRequest request) {
-		model.setViewName("listProject");
-		
-		return model;
-	}
-	//3> Update Project handler
-	@RequestMapping(value = "/updateproject/{projectid}", method = RequestMethod.GET, produces = { "text/html" })
-	public Object updateProject(@PathVariable("projectid")int projectid,ModelAndView model, HttpServletRequest request) {
-		model.setViewName("updateProject");
-		model.addObject("project",projectDao.getProject(projectid));
-		return model;
-	}
-
+			@RequestMapping(value = "/getallprojects", method = RequestMethod.GET, produces = { "text/html" })
+			public Object getAllProjects(ModelAndView model, HttpServletRequest request) {
+					model.setViewName("listProject");
+					
+					return model;
+			}
+    //3> Update Project handler
+			@RequestMapping(value = "/updateproject/{projectid}", method = RequestMethod.GET, produces = { "text/html" })
+			public Object updateProject(@PathVariable("projectid")int projectid,ModelAndView model, HttpServletRequest request) {
+					model.setViewName("updateProject");
+					model.addObject("project",projectDao.getProject(projectid));
+					return model;
+			}
+			
 	// 1> API to add project
 	@RequestMapping(value = "/addproject", method = RequestMethod.POST, produces = { "text/html" })
 	public Object addProject(@RequestParam(value = "title") String title,
@@ -70,14 +70,15 @@ public class ProjectController {
 		Project project = new Project();
 		project.setOwner(ownerDao.getPerson(emailid));
 		project.setProjectDetail(new EntityDetail(title, description, state));
-
-
+		
+		
 		if (!projectDao.addProject(project))
 			return new ResponseEntity<String>("fail", responseHeaders,
 					HttpStatus.BAD_REQUEST);
 		Person person=ownerDao.getPerson(emailid);
-		model.addObject("personSessionObj",person);
-		
+	    model.addObject("personSessionObj",person);
+	    System.out.println("No of owned projects: "+person.getOwnedProjects().size());
+		System.out.println("No of shared projects: "+person.getSharedProjects().size());
 
 		return model;
 
@@ -98,17 +99,16 @@ public class ProjectController {
 				HttpStatus.OK);
 
 	}
-
+	
 	// 3> API to get both projects and shared projects
 	@RequestMapping(value = "/getbothproject", method = RequestMethod.POST, produces = { "application/json" })
 	public @ResponseBody
 	ResponseEntity<?> getBothProject(
 			@RequestParam(value = "projectId") int projectId) {
-		System.out.println("Inside getBothProject API");
 		HttpHeaders responseHeaders = new HttpHeaders();		
 		return null;
 	}
-
+	
 	@RequestMapping(value = "/updateproject", method = RequestMethod.POST, produces = {"text/html"})
 	public Object updateProjectPost(@RequestParam(value="projectid") int projectid,
 			@RequestParam(value="title") String title,
@@ -117,7 +117,7 @@ public class ProjectController {
 			@RequestParam(value="new_state",required = false) String new_state,
 			@RequestParam(value="ownerid") String ownerid,
 			ModelAndView model, HttpServletRequest request){
-		System.out.println("Update Project API");
+		model.setViewName("listProject");
 		Project project = new Project();
 		project.setProjectId(projectid);
 		project.setOwner(ownerDao.getPerson(ownerid));
@@ -126,52 +126,12 @@ public class ProjectController {
 		System.out.println("New state" +new_state);
 		if(new_state != null)
 			state=new_state;
-
+		
 		System.out.println("Current state" +state);
 		project.setProjectDetail(new EntityDetail(title,description,state));
-		String validstate=projectDao.updateProject(project);
-		if(validstate.matches("incompletetask"))
-		{
-			state=prev_state;
-			model.setViewName("updateProject");
-			project.setValidstate("incompletetask");
-			project.setProjectDetail(new EntityDetail(title,description,state));
-			model.addObject("project",project);
-		}
-		else if(validstate.matches("assignedtask")){
-
-			if(new_state != null)
-				state=new_state;
-			project.setValidstate("assignedtask");
-			project.setProjectDetail(new EntityDetail(title,description,state));
-			model.setViewName("listProject");
-			model.addObject("personSessionObj", ownerDao.getPerson(ownerid));
-		}
-		else if(validstate.matches("unfinishedtask")){
-
-			state=prev_state;
-			model.setViewName("updateProject");
-			project.setValidstate("unfinishedtask");
-			project.setProjectDetail(new EntityDetail(title,description,state));
-			model.addObject("project",project);
-		}
-		else if(validstate.matches("finishedtask")){
-
-			if(new_state != null)
-				state=new_state;
-			project.setValidstate("finishedtask");
-			project.setProjectDetail(new EntityDetail(title,description,state));
-			model.setViewName("listProject");
-			model.addObject("personSessionObj", ownerDao.getPerson(ownerid));
-		}
+		projectDao.updateProject(project);
+		model.addObject("personSessionObj", ownerDao.getPerson(ownerid));
 		return model;
 	}
-
-	@RequestMapping(value = "/progressreport", method = RequestMethod.GET, produces = { "text/html" })
-	public Object progressReport(ModelAndView model, HttpServletRequest request) {
-		model.setViewName("progressreport");
-		return model;
-	}
-	
 	
 }
