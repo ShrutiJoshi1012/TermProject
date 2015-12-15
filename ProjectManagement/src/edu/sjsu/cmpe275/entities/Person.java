@@ -37,6 +37,18 @@ public class Person implements java.io.Serializable {
 	private String emailid;
 	private String description;
 	
+	@Transient
+	private int TaskCount;
+	
+	@Transient
+	public int getTaskCount() {
+		return TaskCount;
+	}
+
+	public void setTaskCount(int taskCount) {
+		TaskCount = taskCount;
+	}
+
 	//Person can own multiple projects
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="PERSON_ID", cascade=CascadeType.ALL)  
 	private List<Project> ownedProjects=new ArrayList<Project>();

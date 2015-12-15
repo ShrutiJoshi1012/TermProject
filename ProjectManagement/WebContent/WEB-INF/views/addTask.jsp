@@ -32,9 +32,11 @@ edu.sjsu.cmpe275.entities.Project currProject = (edu.sjsu.cmpe275.entities.Proje
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">
-                            Proj-Share<small>Overview</small>
-                        </h1>
+                          <h3 class="page-header"> Project Details</h3>
+                           <small> Name: &nbsp;<b><%out.print(currProject.getProjectDetail().getTitle()); %></b></small><br>
+                           <small> Owner: &nbsp;<b><%out.print(currProject.getOwner().getName()); %></b></small><br>
+                           <small> State:  &nbsp;<b><%out.print(currProject.getProjectDetail().getState()); %></b></small><br>
+                       <br>
                         <ol class="breadcrumb">
                             <li class="active">
                                 <i class="fa fa-dashboard"></i><a href = "${pageContext.servletContext.contextPath}/dashboard"> Dashboard </a>
