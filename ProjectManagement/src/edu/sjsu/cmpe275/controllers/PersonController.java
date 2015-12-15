@@ -99,7 +99,6 @@ public class PersonController {
 			@RequestParam(value = "emailid") String emailid,
 			@RequestParam(value = "description") String description,
 			ModelAndView model, HttpServletRequest request) {
-		System.out.println("Inside signup API ");
 		HttpHeaders responseHeaders = new HttpHeaders();
 		
 		Person person = new Person(name, password, emailid, description);
@@ -126,7 +125,6 @@ public class PersonController {
 	public Object signIn(@RequestParam(value = "emailid") String emailid,
 			@RequestParam(value = "password") String password,
 			ModelAndView model, HttpServletRequest request) {
-		System.out.println("Inside signin API ");
 		HttpHeaders responseHeaders = new HttpHeaders();
 		model.setViewName("dashboard");
 		Person person = personDao.getPerson(emailid);
@@ -156,7 +154,6 @@ public class PersonController {
 			@RequestParam(value = "emailid") String emailid,
 			@RequestParam(value = "description") String description,
 			ModelAndView model, HttpServletRequest request) {
-		System.out.println("Inside update API ");
 		model.setViewName("updateProfile");
 		HttpHeaders responseHeaders = new HttpHeaders();
 		Person person = new Person(name, password, emailid, description);

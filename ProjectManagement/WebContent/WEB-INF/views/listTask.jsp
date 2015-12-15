@@ -25,11 +25,8 @@ edu.sjsu.cmpe275.entities.Project  project= (edu.sjsu.cmpe275.entities.Project) 
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h3 class="page-header"> Project Details</h3>
-                           <small> Name: &nbsp<b><%out.print(project.getProjectDetail().getTitle()); %></b></small><br>
-                           <small> Owner: &nbsp<b><%out.print(project.getOwner().getName()); %></b></small><br>
-                           <small> State:  &nbsp<b><%out.print(project.getProjectDetail().getState()); %></b></small><br>
-                       <br>
+                        <h3 class="page-header">
+                        </h3>
                         <ol class="breadcrumb">
                             <li class="active">
                                 <i class="fa fa-dashboard"></i><a href = "${pageContext.servletContext.contextPath}/dashboard"> Dashboard</a>
@@ -72,14 +69,15 @@ edu.sjsu.cmpe275.entities.Project  project= (edu.sjsu.cmpe275.entities.Project) 
                                         <td><%out.print(tasks.get(i).getTaskDetail().getState()); %></td>
                                         <td><%out.print(tasks.get(i).getEstimatedWork()); %></td>
                                         <td><%out.print(tasks.get(i).getActualWork()); %></td>
-                                        <% if(project.getProjectDetail().getState().equals("Completed")||project.getProjectDetail().getState().equals("Cancelled") || tasks.get(i).getTaskDetail().getState().matches("Finished")|| tasks.get(i).getTaskDetail().getState().matches("Cancelled")){ %>
+                                        <% if(project.getProjectDetail().getState().equals("Completed")||project.getProjectDetail().getState().equals("Cancelled")){ %>
                                         <td>Read-Only</td>
                                         <td>Read-Only</td>
                                         <% } else{ %>
                                         <td><a href = "${pageContext.servletContext.contextPath}/updatetask/<%out.print(tasks.get(i).getProject().getProjectId());%>/<%out.print(tasks.get(i).getTaskId());%>"><button type="submit" class="btn btn-success">Update</button></a></td>
-                                        <% 
+                                        <% System.out.println(tasks.get(i).getProject().getOwner().getPersonId());
+                                        System.out.println(person.getPersonId());
                                         if(tasks.get(i).getProject().getOwner().getPersonId() == person.getPersonId()){ %>
-                                        <td><a href = "${pageContext.servletContext.contextPath}/canceltask/<%out.print(project.getProjectId());%>/<%out.print(tasks.get(i).getTaskId());%>"><button type="submit" class="btn btn-warning">Cancel</button></a></td>
+                                        <td><button type="submit" class="btn btn-warning">Cancel</button></td>
                                     	<%} else{%>
                                     	<td><button type = "submit" class = "btn btn-danger" readonly>Only Owner Can Cancel It!</button></td>
                                     	<%} }%>

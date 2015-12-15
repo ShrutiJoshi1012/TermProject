@@ -11,6 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <title>InfoSoft</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
    
    
