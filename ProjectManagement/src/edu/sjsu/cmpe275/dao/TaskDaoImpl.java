@@ -26,20 +26,26 @@ public class TaskDaoImpl implements TaskDao{
 	
 	@Override
 	public boolean addTask(Task task) {
+		System.out.println("IN CreateTask");
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			session.save(task);
 			session.flush();
 			session.getTransaction().commit();
+			System.out.println("create task result: success");
 		} catch (ConstraintViolationException e) {
+			System.out
+					.println("Invalid Owner_Id or Project Id.. add task failed");
 			session.getTransaction().rollback();
 			return false;
 		} catch (JDBCConnectionException e) {
+			System.out.println("Connection lost");
 			session.getTransaction().rollback();
 			return false;
 		} catch (HibernateException e) {
 			//e.printStackTrace();
+			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 			return false;
 		}
@@ -49,17 +55,21 @@ public class TaskDaoImpl implements TaskDao{
 	@Override
 	public Task getTask(int id) {
 		// TODO Auto-generated method stub
+		System.out.println("IN UpdateTask");
 		Session session = sessionFactory.getCurrentSession();
 		Task task=null;
 		try {
 			session.beginTransaction();
 			task=(Task)session.get(Task.class,id);
 			session.getTransaction().commit();
+			System.out.println("update task : success");
 		} catch (JDBCConnectionException e) {
+			System.out.println("Connection lost");
 			session.getTransaction().rollback();
 			return null;
 		} catch (HibernateException e) {
 			//e.printStackTrace();
+			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 			return null;
 		}
@@ -69,16 +79,20 @@ public class TaskDaoImpl implements TaskDao{
 	// Update Task
 		@Override
 		public boolean updateTask(Task task) {
+			System.out.println("IN UpdateTask");
 			Session session = sessionFactory.getCurrentSession();
 			try {
 				session.beginTransaction();
 				session.saveOrUpdate(task);
 				session.getTransaction().commit();
+				System.out.println("update task : success");
 			} catch (JDBCConnectionException e) {
+				System.out.println("Connection lost");
 				session.getTransaction().rollback();
 				return false;
 			} catch (HibernateException e) {
 				//e.printStackTrace();
+				System.out.println("Hibernate exception occured");
 				session.getTransaction().rollback();
 				return false;
 			}
@@ -88,11 +102,29 @@ public class TaskDaoImpl implements TaskDao{
 	@Override
 	public boolean deleteTask(Task task) {
 		// TODO Auto-generated method stub
+		System.out.println("IN UpdateTask");
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.update(task);
+			session.getTransaction().commit();
+			System.out.println("Cancel task : success");
+		} catch (JDBCConnectionException e) {
+			System.out.println("Connection lost");
+			session.getTransaction().rollback();
+			return false;
+		} catch (HibernateException e) {
+			//e.printStackTrace();
+			System.out.println("Hibernate exception occured");
+			session.getTransaction().rollback();
+			return false;
+		}
 		return true;
 	}
 
 	@Override
 	public List<Task> getAllTasks(int projectId) {
+		System.out.println("IN GetProject");
 		List<Task> tasks=null;
 		Session session = sessionFactory.getCurrentSession();
 		try {
@@ -103,6 +135,7 @@ public class TaskDaoImpl implements TaskDao{
 			session.getTransaction().commit();
 		} catch (HibernateException e) {
 			//e.printStackTrace();
+			System.out.println("Hibernate exception occured");
 			session.getTransaction().rollback();
 		}
 		return tasks;
