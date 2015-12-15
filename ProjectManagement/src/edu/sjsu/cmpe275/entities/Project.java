@@ -4,6 +4,8 @@ package edu.sjsu.cmpe275.entities;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -29,6 +31,27 @@ public class Project implements java.io.Serializable {
 	
 	private Person owner;
 
+	@Transient
+	private List<Person> members;
+	
+	@Transient
+	public List<Person> getMembers() {
+		return members;
+	}
+	public void setMembers(List<Person> members) {
+		this.members = members;
+	}
+
+	@Transient
+	private String validstate;
+	@Transient
+	public String getValidstate() {
+		return validstate;
+	}
+	public void setValidstate(String validstate) {
+		this.validstate = validstate;
+	}
+	
 	@Embedded
 	private EntityDetail projectDetail;
 
@@ -69,6 +92,46 @@ public class Project implements java.io.Serializable {
 
 	public void setProjectDetail(EntityDetail projectDetail) {
 		this.projectDetail = projectDetail;
+	}
+
+	
+	@Transient
+	private int finsished_tasks;
+	@Transient
+	public int getFinsished_tasks() {
+		return finsished_tasks;
+	}
+	public void setFinsished_tasks(int finsished_tasks) {
+		this.finsished_tasks = finsished_tasks;
+	}
+	
+	private int unfinsished_tasks;
+	@Transient
+	public int getUnfinsished_tasks() {
+		return unfinsished_tasks;
+	}
+	public void setUnfinsished_tasks(int unfinsished_tasks) {
+		this.unfinsished_tasks = unfinsished_tasks;
+	}
+	
+	@Transient
+	private int total_planned_tasks;
+	@Transient
+	public int getTotal_planned_tasks() {
+		return total_planned_tasks;
+	}
+	public void setTotal_planned_tasks(int total_planned_tasks) {
+		this.total_planned_tasks = total_planned_tasks;
+	}
+	
+	@Transient
+	private int total_cancelled_tasks;
+	@Transient
+	public int getTotal_cancelled_tasks() {
+		return total_cancelled_tasks;
+	}
+	public void setTotal_cancelled_tasks(int total_cancelled_tasks) {
+		this.total_cancelled_tasks = total_cancelled_tasks;
 	}
 
 }
