@@ -10,7 +10,7 @@ CMPE275- Term Project
 Nikitha Raviraj - nikitha.raviraj@sjsu.edu
 Ruch Shah - ruchi.shah@sju.edu
 Shruti Joshi  - shruti.joshi01@sjsu.edu
-Sudhindra Thangavelu  - sudhindraenator@gmail.com
+
 
 #Build Instructions
 
